@@ -1,0 +1,17 @@
+enum ROLES {
+  Engineer
+  Supervisor
+}
+
+type User {
+  _id: ObjectId
+  name: String
+  email: String
+  role: ROLES
+  createdAt: String
+}
+
+extend type Query {
+    getUsers: [User]
+    getUser(input: IdInput): User
+}

@@ -1,0 +1,73 @@
+scalar Date
+scalar ObjectId
+
+enum INCIDENT_STATUS {
+  Created
+  Acknowledged
+  Resolved
+}
+
+enum SORT_DIRECTION {
+  ASC
+  DESC
+}
+
+enum ORDER_FIELDS {
+  createdAt
+  updatedAt
+}
+
+type Incident {
+  id: ObjectId
+  title: String
+  description: String
+  assignee: String
+  status: INCIDENT_STATUS
+  createdAt: String
+  updatedAt: String
+}
+
+type ResponseIncident {
+  items: [Incident]
+  count: Int
+  currentPage: Int
+  totalPage: Int
+}
+
+input IncidentFilter {
+  title: String
+  description: String
+  assignee: String
+  status: INCIDENT_STATUS
+}
+
+input getIncidentsInput {
+  filter: IncidentFilter
+  orderBy: ORDER_FIELDS
+  sortDirection: SORT_DIRECTION
+  page: Int
+  pageSize: Int
+}
+
+input IncidentInput {
+  title: String
+  description: String
+}
+
+input AssignIncidentInput {
+  _id: ObjectId!
+  email: String!
+}
+
+type Query {
+  getIncidents(input: getIncidentsInput): ResponseIncident
+  getIncident(input: IdInput): Incident
+}
+
+type Mutation {
+  createIncident(input: IncidentInput): Incident
+  assignIncident(input: AssignIncidentInput): Incident
+  acknowledgeIncident(input: IdInput): Incident
+  resolveIncident(input: IdInput): Incident
+  removeIncident(input: IdInput): Incident
+}
