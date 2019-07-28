@@ -4,3 +4,16 @@ services:
     image: mongo
     ports:
       - "27020:27017"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - NODE_ENV=production
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    ports:
+      - "3000:3000"
