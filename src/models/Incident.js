@@ -18,6 +18,13 @@ const IncidentSchema = new mongoose.Schema({
   }
 }, { timestamps: true })
 
+IncidentSchema.pre('save', function (next) {
+  if (this.isNew) {
+      this.status = 'Created'
+  }
+  next();
+});
+
 const Incident = mongoose.model('Incident', IncidentSchema)
 
 module.exports = Incident
